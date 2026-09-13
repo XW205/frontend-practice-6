@@ -1,0 +1,11 @@
+{
+  "source": "昆明市气象局2025年气候通报",
+  "weatherTypes": [
+    { "name": "小雨", "days": 143 },
+    { "name": "晴", "days": 106 },
+    { "name": "多云", "days": 92 },
+    { "name": "阴", "days": 45 },
+    { "name": "沙雾霾", "days": 10 },
+    { "name": "雪", "days": 1 }
+  ]
+}
