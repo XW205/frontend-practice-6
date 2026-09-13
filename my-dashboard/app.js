@@ -1,3 +1,5 @@
+let barChart = null;
+
 const renderCards = (data) => {
   const tempData = data.series[0].counts;
   const rainData = data.series[1].counts;
@@ -15,6 +17,20 @@ const renderCards = (data) => {
   $('#cards').html(cardsHTML);
 };
 
+const renderBarChart = (data) => {
+  const barDom = document.querySelector('#bar-chart');
+  if (!barDom) return;
+  if (barChart) barChart.dispose();
+  barChart = echarts.init(barDom);
+  barChart.setOption({
+    title: { text: '昆明市2025年各月降水量', subtext: '数据来源：昆明市气象局 ｜ 单位：毫米(mm)', left: 'center' },
+    tooltip: { trigger: 'axis' },
+    xAxis: { type: 'category', data: data.months },
+    yAxis: { type: 'value', name: '降水量 (mm)' },
+    series: [{ name: '降水量', type: 'bar', data: data.series[1].counts, itemStyle: { color: '#4facfe' } }]
+  });
+};
+
 const loadData = async () => {
   try {
     const response = await fetch('data/weather.json');
@@ -22,6 +38,7 @@ const loadData = async () => {
     const data = await response.json();
     $('#sub-title').text(`${data.title} ｜ 数据来源：昆明市气象局2025年气候通报`);
     renderCards(data);
+    renderBarChart(data);
   } catch (error) {
     console.error('加载失败：', error.message);
   }
